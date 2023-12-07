@@ -38,7 +38,11 @@ dependencies {
     // database
     implementation ("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
     implementation("org.postgresql:postgresql:42.5.4")
-    implementation("org.testng:testng:7.1.0")
+    implementation("org.testng:testng:7.7.0")
+
+    // Koin for Ktor; make sure you go to File...Project Structure
+    // and switch to Java 11
+    implementation ("io.insert-koin:koin-ktor:3.2.0")
 
 
     testImplementation("io.ktor:ktor-server-tests-jvm:2.2.4")

@@ -8,5 +8,5 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class CharacterResponse (
-   val character: Character
+   val character: List<Character?>
 )

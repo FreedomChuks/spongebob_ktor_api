@@ -13,7 +13,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 object DatabaseFactory {
     fun init(){
         val driverClass = "org.postgresql.Driver"
-        val jdbcUrl ="jdbc:postgresql://localhost:5432/user=freedomchuks"
+        val jdbcUrl ="jdbc:postgresql://localhost:5432/freedomchuks?user=freedomchuks&password=password"
         Database.connect(jdbcUrl,driverClass)
         transaction {
             SchemaUtils.create(CharactersTable)

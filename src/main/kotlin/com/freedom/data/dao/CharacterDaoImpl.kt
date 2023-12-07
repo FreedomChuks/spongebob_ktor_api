@@ -3,7 +3,6 @@ package com.freedom.data.dao
 import com.freedom.data.DatabaseFactory.dbQuery
 import com.freedom.data.model.Character
 import com.freedom.data.model.CharactersTable
-import com.freedom.domain.CharacterResponse
 import com.freedom.utils.ErrorCode
 import com.freedom.utils.ServiceResult
 import org.jetbrains.exposed.exceptions.ExposedSQLException
@@ -13,7 +12,7 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.selectAll
 
 
-class CharacterDaoImpl: CharacterDao {
+class CharacterDaoImpl: CharacterDaoInterface {
 
     private fun rowToCharacter(row: ResultRow) = Character(
         id = row[CharactersTable.id],
@@ -57,11 +56,10 @@ class CharacterDaoImpl: CharacterDao {
         }
     }
 
-    override suspend fun addCharacter(characters: Character) {
-        try {
+    override suspend fun addCharacter(characters: Character): ServiceResult<Character?> {
+        return try {
             dbQuery {
                 CharactersTable.insert {
-                    it[id] = characters.id
                     it[name] = characters.name
                     it[image] = characters.image
                     it[created] = characters.created
