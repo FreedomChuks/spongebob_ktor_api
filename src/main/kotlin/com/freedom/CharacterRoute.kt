@@ -3,6 +3,7 @@ package com.freedom
 import com.freedom.data.model.Character
 import com.freedom.domain.usecase.AddCharacters
 import com.freedom.domain.usecase.GetAllCharacter
+import com.freedom.domain.usecase.GetCharacter
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -11,7 +12,8 @@ import io.ktor.server.routing.*
 
 fun Route.characterRoute(
     addCharacters: AddCharacters,
-    getAllCharacter: GetAllCharacter
+    getAllCharacter: GetAllCharacter,
+    getCharacter: GetCharacter
 
 ){
     post("/create") {
@@ -43,6 +45,19 @@ fun Route.characterRoute(
     }
 
     get("/character/{id}") {
+        val id = call.parameters["id"]?:run {
+            call.respond(
+                status = HttpStatusCode.BadRequest,
+                message = "Invalid Parameter"
+            )
+            return@get
+        }
+        val response = getCharacter(id.toInt())
+        val HttpStatus = if (response?.character?.name?.isNotEmpty() == true) HttpStatusCode.OK else HttpStatusCode.BadGateway
+        call.respond(
+            status = HttpStatus,
+            message = response
+        )
 
     }
 }

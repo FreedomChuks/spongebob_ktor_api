@@ -3,6 +3,7 @@ package com.freedom.plugins
 import com.freedom.characterRoute
 import com.freedom.domain.usecase.AddCharacters
 import com.freedom.domain.usecase.GetAllCharacter
+import com.freedom.domain.usecase.GetCharacter
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -26,7 +27,8 @@ fun Application.configureRouting(
 
         val addCharacters by  inject<AddCharacters>()
         val getCharacters by  inject<GetAllCharacter>()
-        characterRoute(addCharacters,getCharacters)
+        val getCharacter by  inject<GetCharacter>()
+        characterRoute(addCharacters,getCharacters,getCharacter)
     }
 
 }

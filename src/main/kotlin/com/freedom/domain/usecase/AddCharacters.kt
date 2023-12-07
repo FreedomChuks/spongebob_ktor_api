@@ -16,10 +16,10 @@ class AddCharacters(
         ))
       return  when(dbResult){
             is ServiceResult.Error -> {
-                CharacterResponse(listOf(character))
+                CharacterResponse(character)
             }
             is ServiceResult.Success -> {
-                CharacterResponse(listOf(dbResult.data))
+                CharacterResponse(dbResult.data)
             }
         }
     }

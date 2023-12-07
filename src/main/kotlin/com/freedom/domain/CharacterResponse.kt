@@ -7,6 +7,11 @@ import kotlinx.serialization.Serializable
    Character response model
  */
 @Serializable
-data class CharacterResponse (
+data class CharacterListResponse (
    val character: List<Character?>
+)
+
+@Serializable
+data class CharacterResponse (
+   val character: Character?
 )
