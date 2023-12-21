@@ -1,7 +1,7 @@
 package com.freedom.data.dao
 
 import com.freedom.data.DatabaseFactory.dbQuery
-import com.freedom.data.model.Character
+import com.freedom.data.model.Characters
 import com.freedom.data.model.CharactersTable
 import com.freedom.utils.ErrorCode
 import com.freedom.utils.ServiceResult
@@ -14,14 +14,20 @@ import org.jetbrains.exposed.sql.selectAll
 
 class CharacterDaoImpl: CharacterDaoInterface {
 
-    private fun rowToCharacter(row: ResultRow) = Character(
+    private fun rowToCharacter(row: ResultRow) = com.freedom.data.model.Characters(
         id = row[CharactersTable.id],
         name = row[CharactersTable.name],
+        description = row[CharactersTable.description],
+        color = row[CharactersTable.color],
+        occupation = row[CharactersTable.occupation],
+        residence = row[CharactersTable.residence],
+        gender = row[CharactersTable.gender],
         image= row[CharactersTable.image],
-        created = row[CharactersTable.created]
+        created = row[CharactersTable.created],
     )
 
-    override suspend fun allCharacters(): ServiceResult<List<Character>> {
+    //Fetch All Character from DB
+    override suspend fun allCharacters(): ServiceResult<List<Characters>> {
         return try {
             dbQuery {
                 val response = CharactersTable.selectAll().map(::rowToCharacter)
@@ -38,7 +44,8 @@ class CharacterDaoImpl: CharacterDaoInterface {
         }
     }
 
-    override suspend fun character(id: Int): ServiceResult<Character?> {
+    //Fetch A single Character from DB
+    override suspend fun character(id: Int): ServiceResult<Characters?> {
         return try {
             dbQuery {
                 val response = CharactersTable.select {
@@ -56,11 +63,17 @@ class CharacterDaoImpl: CharacterDaoInterface {
         }
     }
 
-    override suspend fun addCharacter(characters: Character): ServiceResult<Character?> {
+    //Insert A Character to DB
+    override suspend fun addCharacter(characters: Characters): ServiceResult<Characters?> {
         return try {
             dbQuery {
                 CharactersTable.insert {
                     it[name] = characters.name
+                    it[description] = characters.description
+                    it[gender] = characters.gender
+                    it[occupation] = characters.occupation
+                    it[residence] = characters.residence
+                    it[color] = characters.color
                     it[image] = characters.image
                     it[created] = characters.created
                 }.resultedValues?.singleOrNull()?.let {
@@ -80,7 +93,8 @@ class CharacterDaoImpl: CharacterDaoInterface {
         }
     }
 
-    override suspend fun addCharacters(characters: List<Character>) {
+    //Batch Insert Character to DB
+    override suspend fun addCharacters(characters: List<Characters>) {
         try {
             dbQuery {
                 CharactersTable.batchInsert(characters){ characterResponse ->

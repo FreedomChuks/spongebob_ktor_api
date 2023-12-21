@@ -1,6 +1,6 @@
 package com.freedom.domain
 
-import com.freedom.data.model.Character
+import com.freedom.data.model.Characters
 import kotlinx.serialization.Serializable
 
 /*
@@ -8,10 +8,16 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class CharacterListResponse (
-   val character: List<Character?>
+   val character: List<Characters?>
 )
 
 @Serializable
 data class CharacterResponse (
-   val character: Character?
+   val character: Characters?
+)
+
+@Serializable
+data class ErrorResponse(
+   val code:Int,
+   val message:String
 )

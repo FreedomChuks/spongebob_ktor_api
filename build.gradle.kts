@@ -4,6 +4,7 @@ val logbackVersion: String by project
 val exposedVersion:String by project
 
 plugins {
+    application
     kotlin("jvm") version "1.9.21"
     id("io.ktor.plugin") version "2.3.6"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.21"
@@ -43,6 +44,10 @@ dependencies {
     // Koin for Ktor; make sure you go to File...Project Structure
     // and switch to Java 11
     implementation ("io.insert-koin:koin-ktor:3.2.0")
+
+    //Cloudinary
+    implementation("com.cloudinary:cloudinary-core:1.36.0")
+    implementation("com.cloudinary:cloudinary-http44:1.33.0")
 
 
     testImplementation("io.ktor:ktor-server-tests-jvm:2.2.4")

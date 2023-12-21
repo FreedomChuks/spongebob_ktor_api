@@ -1,6 +1,7 @@
 package com.freedom.plugins
 
-import com.freedom.characterRoute
+import com.freedom.domain.ErrorResponse
+import com.freedom.routes.characterRoute
 import com.freedom.domain.usecase.AddCharacters
 import com.freedom.domain.usecase.GetAllCharacter
 import com.freedom.domain.usecase.GetCharacter
@@ -20,7 +21,10 @@ fun Application.configureRouting(
         post("*") {
             call.respond(
                 status = HttpStatusCode.BadRequest,
-                message = "Invalid route "
+                message = ErrorResponse(
+                    code = HttpStatusCode.NotFound.value,
+                    message = "There is nothing here."
+                )
             )
 
         }
